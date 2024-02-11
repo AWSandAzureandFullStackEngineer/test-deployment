@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone repository') {
-          steps {
-            checkout scm
-          }    
-       }
         stage('Update GIT') {
             steps {
                 script {
@@ -25,6 +20,20 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('Approval') {
+            steps {
+                script {
+                    def deploymentDelay = input id: 'Deploy',
+                    message: 'Deploy to production?' [1]
+               }
+           }
+        }
+        stage('Deployment into production') {
+            steps {
+                echo "triggering updatemanifest"
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
             }
         }
         stage('Remove docker images and containers') {
