@@ -36,16 +36,5 @@ pipeline {
                 build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
             }
         }
-        stage('Remove docker images and containers') {
-            steps {
-                sh 'docker system prune -a --force'
-            }
-        }
-        stage('Cleanup') {
-            steps {
-                // Clean up Docker images after build
-                cleanWs()
-            }
-        }  
     }
 }
