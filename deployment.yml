@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name:  authentication-service
-          image: steven8519/authentication-service:66
+          image: steven8519/authentication-service:67
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
